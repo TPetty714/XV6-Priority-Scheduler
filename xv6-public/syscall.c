@@ -56,7 +56,7 @@ int
 argptr(int n, char **pp, int size)
 {
   int i;
-  
+
   if(argint(n, &i) < 0)
     return -1;
   if((uint)i >= proc->sz || (uint)i+size > proc->sz)
@@ -99,7 +99,7 @@ extern int sys_unlink(void);
 extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
-extern int sys_proc(void);
+extern int sys_getprocs(void);
 
 static char (*syscalls_names[]) = {
     [SYS_fork]    "fork",
@@ -123,7 +123,7 @@ static char (*syscalls_names[]) = {
     [SYS_link]    "link",
     [SYS_mkdir]   "mkdir",
     [SYS_close]   "close",
-    [SYS_proc]    "proc",
+    [SYS_getprocs]"getprocs",
 };
 
 static int (*syscalls[])(void) = {
@@ -148,7 +148,7 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
-[SYS_proc]    sys_proc,
+[SYS_getprocs]sys_getprocs,
 };
 
 void syscall(void)

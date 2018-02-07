@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "uproc.h"
 
 int
 sys_fork(void)
@@ -61,7 +62,7 @@ sys_sleep(void)
 {
   int n;
   uint ticks0;
-  
+
   if(argint(0, &n) < 0)
     return -1;
   acquire(&tickslock);
@@ -83,13 +84,25 @@ int
 sys_uptime(void)
 {
   uint xticks;
-  
+
   acquire(&tickslock);
   xticks = ticks;
   release(&tickslock);
   return xticks;
 }
 
-int sys_proc(void){
+int sys_getprocs(void)
+{
+  int max;
+  struct uproc* table;
+
+  if(argint(0, &max) < 0)
+    return -1;
+  if (argptr(1, (void *)&table, max*sizeof(struct uproc)) < 0)
+    return -1;
+
+  cprintf("%d\n",max);
+  cprintf("%s\n", table);
+  cprintf("HERE\n");
   return 0;
 }

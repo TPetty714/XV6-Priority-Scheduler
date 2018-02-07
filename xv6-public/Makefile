@@ -29,10 +29,10 @@ OBJS = \
 	vm.o\
 
 # Cross-compiling (e.g., on Mac OS X)
-TOOLPREFIX = i386-elf-
+#TOOLPREFIX = i386-elf-
 
 # Using native tools (e.g., on X86 Linux)
-#TOOLPREFIX = 
+TOOLPREFIX = 
 
 # Try to infer the correct TOOLPREFIX if not set
 ifndef TOOLPREFIX
@@ -172,7 +172,8 @@ UPROGS=\
 	_usertests\
 	_wc\
 	_zombie\
- 	_readtest
+	_readtest\
+	_ps
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)
@@ -240,7 +241,7 @@ qemu-nox-gdb: fs.img xv6.img .gdbinit
 # check in that version.
 
 EXTRA=\
-	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
+	ps.c mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
 	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c\
 	printf.c umalloc.c readtest.c\
 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
