@@ -53,6 +53,7 @@ int main(int argc, char* argv[])
       //   printf(1, "%s\t %d\t RUNNABLE\t\n", table[p].name, table[p].pid);
     }
     printf(1, "Total Processes printed: %d\n", numProc);
-    return numProc;
+    // return numProc;
     // return 0;
+    exit();
 }
