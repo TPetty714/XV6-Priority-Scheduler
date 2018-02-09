@@ -93,16 +93,5 @@ sys_uptime(void)
 
 int sys_getprocs(void)
 {
-  int max;
-  struct uproc* table;
-
-  if(argint(0, &max) < 0)
-    return -1;
-  if (argptr(1, (void *)&table, max*sizeof(struct uproc)) < 0)
-    return -1;
-
-  cprintf("%d\n",max);
-  cprintf("%s\n", table);
-  cprintf("HERE\n");
-  return 0;
+  return getprocs();
 }

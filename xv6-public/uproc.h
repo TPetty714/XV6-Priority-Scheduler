@@ -2,6 +2,7 @@
 #define UPROC_H
 #include "types.h"
 struct uproc {
+    int pid;
     int ppid;
     int state;
     uint sz;
