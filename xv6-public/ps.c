@@ -35,15 +35,16 @@ int main(int argc, char* argv[])
     int numProc = 0;
     struct uproc table[max];
     numProc = getprocs(max, table);
-    printf(1, "pid \t ppid \t state \t size \t name\n");
+    printf(1, "name \t pid \t ppid \t state \t size \t priority\n");
     for (int p = 0; p < max; p++) {
       if (table[p].pid != 0) {
-        printf(1, "%d \t %d \t %s \t %d \t %s\n",
-          table[p].pid,
-          table[p].ppid,
-          getState(table[p].state),
-          table[p].sz,
-          table[p].name);
+        printf(1, "%s \t %d \t %d \t %s \t %d \t %d\n",
+               table[p].name,
+               table[p].pid,
+               table[p].ppid,
+               getState(table[p].state),
+               table[p].sz,
+               table[p].priority);
       }
       // if ( table[p].state == SLEEPING )
       //   printf(1, "%s\t %d\t SLEEPING\t\n", table[p].name, table[p].pid);

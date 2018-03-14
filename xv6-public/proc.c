@@ -43,6 +43,7 @@ allocproc(void)
     if(p->state == UNUSED)
       goto found;
   release(&ptable.lock);
+  p->priority = 50;
   return 0;
 
 found:
@@ -267,6 +268,8 @@ void
 scheduler(void)
 {
   struct proc *p;
+  struct proc *p2;
+  struct proc *pHigh;
 
   for(;;){
     // Enable interrupts on this processor.
@@ -277,10 +280,17 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
-
+      pHigh = p;
+      for(p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++) {
+        if (p->state != RUNNABLE)
+          continue;
+        if (pHigh->priority > p2->priority)
+          pHigh = p2;
+      }
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
+      p = pHigh;
       proc = p;
       switchuvm(p);
       p->state = RUNNING;
@@ -486,6 +496,7 @@ int getprocs(){
     table[i].ppid = p->parent->pid;
     table[i].state = p->state;
     table[i].sz = p->sz;
+    table[i].priority = p->priority;
     memmove(table[i].name,p->name,16);
     if (p->pid > 0)
       numProc++;

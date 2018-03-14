@@ -6,6 +6,7 @@ struct uproc {
     int ppid;
     int state;
     uint sz;
+    int priority;
     char name[16];
 };
 #endif
