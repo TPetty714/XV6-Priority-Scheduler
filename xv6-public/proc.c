@@ -45,14 +45,14 @@ allocproc(void)
     if(p->state == UNUSED)
       goto found;
   release(&ptable.lock);
-  p->priority = 50; //Tyler put the line here
-  cprintf("alloc proc name not found: %s prio: %d",p->name, p->priority);
+  // p->priority = 50; //Tyler put the line here
+  // cprintf("alloc proc name not found: %s prio: %d",p->name, p->priority);
   return 0;
 
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
-  cprintf("alloc proc name: %s prio: %d\n",p->name, p->priority);
+  // cprintf("alloc proc name: %s prio: %d\n",p->name, p->priority);
   p->priority = 50; // dennis moved line here
   release(&ptable.lock);
 
