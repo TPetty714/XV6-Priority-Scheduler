@@ -1,4 +1,4 @@
 .idea
 cmake-build-debug
 *.vscode/
-*xv6-public/cmake-build-debug*
+*xv6-public/cmake-build-debug/
