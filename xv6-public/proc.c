@@ -8,6 +8,7 @@
 #include "spinlock.h"
 #include "uproc.h"
 
+
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
@@ -25,6 +26,7 @@ void
 pinit(void)
 {
   initlock(&ptable.lock, "ptable");
+  
 }
 
 //PAGEBREAK: 32
@@ -43,12 +45,15 @@ allocproc(void)
     if(p->state == UNUSED)
       goto found;
   release(&ptable.lock);
-  p->priority = 50;
+  // p->priority = 50; //Tyler put the line here
+  // cprintf("alloc proc name not found: %s prio: %d",p->name, p->priority);
   return 0;
 
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
+  // cprintf("alloc proc name: %s prio: %d\n",p->name, p->priority);
+  p->priority = 50; // dennis moved line here
   release(&ptable.lock);
 
   // Allocate kernel stack.
@@ -277,13 +282,26 @@ scheduler(void)
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
+
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE)
+
+      if(p->state != RUNNABLE){
+        
         continue;
+      }
+        
       pHigh = p;
       for(p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++) {
-        if (p->state != RUNNABLE)
+
+          // This was set to p->state which didn't ever check if p2 is runnable thus 
+        if (p2->state != RUNNABLE){
+          // if (strncmp(p->name,"",1) != 0){
+          //     cprintf("scheduler p:%s State: %d priority: %d address: %d\n", p->name, p->state, p->priority, p);
+          //     cprintf("scheduler p2:%s State: %d priority: %d address: %d\n", p2->name, p2->state, p2->priority, p2);
+          //     cprintf("phigh: %s prior: %d",pHigh->name, pHigh->priority);
+          //   }
           continue;
+        }
         if (pHigh->priority > p2->priority)
           pHigh = p2;
       }
