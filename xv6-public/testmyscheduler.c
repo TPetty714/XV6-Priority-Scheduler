@@ -81,7 +81,7 @@ void PrintTestResult(){
     printf(1,"TEST Description:\n");
     printf(1,"\tParent process creates 10 child processes which print to the screen every 1000 iterations.\n");
     printf(1,"\tWhen a child completes its work it gets added to a completition rank array.\n");
-    printf(1,"\tResults a printed when all chid processes complete.\n");
+    printf(1,"\tResults a printed when all child processes complete.\n");
     printf(1,"==========================================================\n");
     printf(1,"\n============\n");
     printf(1,"TEST RESULTS\n");
